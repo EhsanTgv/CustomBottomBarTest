@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'fancy_tab_bar.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -11,6 +13,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -28,6 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("Tab Bar Animation"),
       ),
+      bottomNavigationBar: FancyTabBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
