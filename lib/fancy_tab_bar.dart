@@ -8,12 +8,15 @@ class FancyTabBar extends StatefulWidget {
   _FancyTabBarState createState() => _FancyTabBarState();
 }
 
-class _FancyTabBarState extends State<FancyTabBar> {
+class _FancyTabBarState extends State<FancyTabBar>
+    with TickerProviderStateMixin {
   AnimationController _animationController;
   Tween<double> _positionTween;
   Animation<double> _positionAnimation;
 
   AnimationController _fadeOutController;
+  Animation<double> _fadeFabOutAnimation;
+  Animation<double> _fadeFabInAnimation;
 
   double fabIconAlpha = 1;
   IconData nextIcon = Icons.search;
@@ -25,11 +28,41 @@ class _FancyTabBarState extends State<FancyTabBar> {
   void initState() {
     super.initState();
 
+    _animationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: ANIM_DURATION));
+    _fadeOutController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: (ANIM_DURATION ~/ 5)));
+
     _positionTween = Tween<double>(begin: 0, end: 0);
     _positionAnimation = _positionTween.animate(
         CurvedAnimation(parent: _animationController, curve: Curves.easeOut))
       ..addListener(() {
         setState(() {});
+      });
+
+    _fadeFabOutAnimation = Tween<double>(begin: 1, end: 0).animate(
+        CurvedAnimation(parent: _fadeOutController, curve: Curves.easeOut))
+      ..addListener(() {
+        setState(() {
+          fabIconAlpha = _fadeFabOutAnimation.value;
+        });
+      })
+      ..addStatusListener((AnimationStatus status) {
+        if (status == AnimationStatus.completed) {
+          setState(() {
+            activeIcon = nextIcon;
+          });
+        }
+      });
+
+    _fadeFabInAnimation = Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(
+            parent: _animationController,
+            curve: Interval(0.8, 1, curve: Curves.easeOut)))
+      ..addListener(() {
+        setState(() {
+          fabIconAlpha = _fadeFabInAnimation.value;
+        });
       });
   }
 

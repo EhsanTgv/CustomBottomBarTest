@@ -11,18 +11,17 @@ class TabItem extends StatefulWidget {
   IconData iconData;
   bool selected;
   Function callbackFunction;
-  
+
   @override
   _TabItemState createState() => _TabItemState();
 }
 
+const int ANIM_DURATION = 300;
 const Color PURPLE = Color(0xFF8c77ec);
 
 class _TabItemState extends State<TabItem> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
-    );
+    return Container();
   }
 }
