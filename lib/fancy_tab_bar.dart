@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart' as vector;
 
+import 'tab_item.dart';
+
 class FancyTabBar extends StatefulWidget {
   @override
   _FancyTabBarState createState() => _FancyTabBarState();
@@ -75,7 +77,7 @@ class _FancyTabBarState extends State<FancyTabBar> {
                       child: Container(
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.purple,
+                            color: PURPLE,
                             border: Border.all(
                                 color: Colors.white,
                                 width: 5,
