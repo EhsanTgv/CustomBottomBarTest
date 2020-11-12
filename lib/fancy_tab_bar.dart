@@ -9,10 +9,29 @@ class FancyTabBar extends StatefulWidget {
 }
 
 class _FancyTabBarState extends State<FancyTabBar> {
+  AnimationController _animationController;
+  Tween<double> _positionTween;
   Animation<double> _positionAnimation;
 
+  AnimationController _fadeOutController;
+
   double fabIconAlpha = 1;
+  IconData nextIcon = Icons.search;
   IconData activeIcon = Icons.search;
+
+  int currentSelected = 1;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _positionTween = Tween<double>(begin: 0, end: 0);
+    _positionAnimation = _positionTween.animate(
+        CurvedAnimation(parent: _animationController, curve: Curves.easeOut))
+      ..addListener(() {
+        setState(() {});
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +48,41 @@ class _FancyTabBarState extends State<FancyTabBar> {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [],
+            children: [
+              TabItem(
+                  selected: currentSelected == 0,
+                  iconData: Icons.home,
+                  title: "HOME",
+                  callbackFunction: () {
+                    setState(() {
+                      nextIcon = Icons.home;
+                      currentSelected = 0;
+                    });
+                    _initAnimationAndStart(_positionAnimation.value, -1);
+                  }),
+              TabItem(
+                  selected: currentSelected == 1,
+                  iconData: Icons.search,
+                  title: "SEARCH",
+                  callbackFunction: () {
+                    setState(() {
+                      nextIcon = Icons.search;
+                      currentSelected = 1;
+                    });
+                    _initAnimationAndStart(_positionAnimation.value, 0);
+                  }),
+              TabItem(
+                  selected: currentSelected == 2,
+                  iconData: Icons.person,
+                  title: "USER",
+                  callbackFunction: () {
+                    setState(() {
+                      nextIcon = Icons.person;
+                      currentSelected = 2;
+                    });
+                    _initAnimationAndStart(_positionAnimation.value, 1);
+                  })
+            ],
           ),
         ),
         IgnorePointer(
@@ -102,6 +155,16 @@ class _FancyTabBarState extends State<FancyTabBar> {
         ),
       ],
     );
+  }
+
+  _initAnimationAndStart(double from, double to) {
+    _positionTween.begin = from;
+    _positionTween.end = to;
+
+    _animationController.reset();
+    _fadeOutController.reset();
+    _animationController.forward();
+    _fadeOutController.forward();
   }
 }
 

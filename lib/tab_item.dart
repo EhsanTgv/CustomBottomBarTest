@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 
 class TabItem extends StatefulWidget {
+  TabItem(
+      {@required this.selected,
+      @required this.iconData,
+      @required this.title,
+      @required this.callbackFunction});
+
+  String title;
+  IconData iconData;
+  bool selected;
+  Function callbackFunction;
+  
   @override
   _TabItemState createState() => _TabItemState();
 }
