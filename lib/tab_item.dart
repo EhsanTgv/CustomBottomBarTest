@@ -31,6 +31,26 @@ class _TabItemState extends State<TabItem> {
   double iconAlpha = ALPHA_ON;
 
   @override
+  void initState() {
+    super.initState();
+    _setIconTextAlpha();
+  }
+
+  @override
+  void didUpdateWidget(TabItem oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _setIconTextAlpha();
+  }
+
+  _setIconTextAlpha() {
+    setState(() {
+      iconYAlign = (widget.selected) ? ICON_OFF : ICON_ON;
+      textYAlign = (widget.selected) ? TEXT_ON : TEXT_OFF;
+      iconAlpha = (widget.selected) ? ALPHA_OFF : ALPHA_ON;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Stack(
