@@ -50,7 +50,33 @@ class _TabItemState extends State<TabItem> {
                 ),
               ),
             ),
-          )
+          ),
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            child: AnimatedAlign(
+              duration: Duration(milliseconds: ANIM_DURATION),
+              curve: Curves.easeIn,
+              alignment: Alignment(0, iconYAlign),
+              child: AnimatedOpacity(
+                duration: Duration(milliseconds: ANIM_DURATION),
+                opacity: iconAlpha,
+                child: IconButton(
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  padding: EdgeInsets.all(0),
+                  alignment: Alignment(0, 0),
+                  icon: Icon(
+                    widget.iconData,
+                    color: PURPLE,
+                  ),
+                  onPressed: () {
+                    widget.callbackFunction();
+                  },
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
